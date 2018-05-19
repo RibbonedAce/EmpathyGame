@@ -10,28 +10,84 @@ public class PickUpCollector : MonoBehaviour
     Vector2 direction;
     [SerializeField]
     float angle;
-    public int score;
+    int totalTicketMonetaryValue;
+    int totalMoneyMonetaryValue;
+    int totalTicketValue;
+    int totalMoneyValue;
+    RaycastHit2D[] hitList;
     // Use this for initialization
     void Start()
     {
-        score = 0;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        RaycastHit2D[] hitList = Physics2D.BoxCastAll(transform.position, size, angle, direction);
-        int s = 0;
+        hitList = Physics2D.BoxCastAll(transform.position, size, angle, direction);
+        int ticketsValue = 0;
+        int moneyValue = 0;
+        int ticketsMonetaryValue = 0;
+        int moneyMonetaryValue = 0;
         if (hitList.Length > 0)
         {
             PickUpObject pickUp = null;
             foreach (RaycastHit2D hit in hitList)
             {
                 pickUp = hit.transform.GetComponent<PickUpObject>();
-                s += pickUp.GetMonetaryValue;
+                if(pickUp.GetType() == typeof(Money))
+                {
+                    moneyValue += pickUp.Value;
+                    moneyMonetaryValue += pickUp.GetMonetaryValue;
+                }
+                else
+                {
+                    ticketsValue += pickUp.Value;
+                    ticketsMonetaryValue += pickUp.GetMonetaryValue;
+                }
+                
             }
         }
-        score = s;
+        totalMoneyValue = moneyValue;
+        totalTicketValue = ticketsValue;
+        totalMoneyMonetaryValue = moneyMonetaryValue;
+        totalTicketMonetaryValue = ticketsMonetaryValue;
+    }
+    public int TotalMoneyMonetaryValue
+    {
+        get
+        {
+            return totalMoneyMonetaryValue;
+        }
+    }
+    public int TotalTicketMoneyValue
+    {
+        get
+        {
+            return totalTicketMonetaryValue;
+        }
+    }
+    public int TotalMoneyValue
+    {
+        get
+        {
+            return totalMoneyMonetaryValue;
+        }
+    }
+    public int TotalTicketValue
+    {
+        get
+        {
+            return totalTicketMonetaryValue;
+        }
+    }
+    public void DestroyCollection()
+    {
+        foreach (RaycastHit2D hit in hitList)
+        {
+            Destroy(hit.transform.gameObject);
+        }
+        hitList = null;
     }
     private void OnDrawGizmos()
     {
