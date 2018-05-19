@@ -2,16 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Money : MonoBehaviour
+public class Money : PickUpObject
 {
-    #region Variables
-    [SerializeField]
-    private int value;                          // How much the money's worth
-    #endregion
-
-    #region Properties
-    public int Value { get { return value; } }  // Returns value
-    #endregion
+    
 
     #region Events
     // Awake is called before Start
@@ -19,7 +12,13 @@ public class Money : MonoBehaviour
     {
 
     }
-
+    public override int GetMonetaryValue
+    {
+        get
+        {
+            return this.Value;
+        }
+    }
     // Use this for initialization
     private void Start()
     {
