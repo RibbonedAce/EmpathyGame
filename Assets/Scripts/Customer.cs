@@ -16,7 +16,7 @@ public class Customer : MonoBehaviour
     // Awake is called before Start
     private void Awake()
     {
-
+        
     }
 
     // Use this for initialization
