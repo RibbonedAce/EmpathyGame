@@ -17,7 +17,7 @@ public class Menu : MonoBehaviour
     // Awake is called before Start
     private void Awake()
     {
-        ChangeScreen(0);
+
     }
 
     // Use this for initialization

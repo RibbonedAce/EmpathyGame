@@ -42,17 +42,23 @@ public class MoneyController : MonoBehaviour
 
     #region Methods
     // Give an amount of money
-    public GameObject[] SpawnMoney(int amount, Transform parent)
+    public GameObject[] SpawnMoney(int amount)
     {
         List<GameObject> result = new List<GameObject>();
-        while (amount > 0)
+        for (int i = 0; i < 100 && amount > 0; ++i)
         {
             foreach (GameObject c in currency)
             {
                 Money m = c.GetComponent<Money>();
-                if (m.Value < amount)
+                if (m.Value <= amount)
                 {
-                    result.Add(Instantiate(c, parent));
+                    Vector3 offset = new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f));
+                    GameObject g = Instantiate(c, offset, Quaternion.identity, transform);
+                    result.Add(g);
+                    Vector3[] positions = new Vector3[] { g.transform.position + 5f * Vector3.down };
+                    float[] times = new float[] { 1f };
+                    StartCoroutine(Utils.MoveObject(g.transform, positions, times));
+                    g.GetComponent<SpriteRenderer>().sortingOrder = i;
                     amount -= m.Value;
                     break;
                 }

@@ -59,7 +59,7 @@ public class DialogueBox : MonoBehaviour
     // Display the dialogue box for set time
     private IEnumerator DisplayBox(float time, string text)
     {
-        Text t = box.GetComponent<Text>();
+        Text t = box.GetComponentInChildren<Text>();
         box.SetActive(true);
         t.text = text;
         yield return new WaitForSeconds(time);

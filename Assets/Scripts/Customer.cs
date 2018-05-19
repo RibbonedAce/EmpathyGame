@@ -22,7 +22,7 @@ public class Customer : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-
+        AskForTickets();
     }
 
     // Update is called once per frame
@@ -36,8 +36,8 @@ public class Customer : MonoBehaviour
     // Ask for tickets
     public void AskForTickets()
     {
-        DialogueBox.Instance.GiveDialogue("2 tickets, please.");
-        
+        DialogueBox.Instance.GiveDialogue("3 tickets, please.");
+        GameObject[] money = MoneyController.Instance.SpawnMoney(999);
     }
     #endregion
 
