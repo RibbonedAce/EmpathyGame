@@ -51,7 +51,7 @@ public class DialogueBox : MonoBehaviour
         {
             StopCoroutine(displayRoutine);
         }
-        displayRoutine = StartCoroutine(DisplayBox(10f, dialogue));
+        displayRoutine = StartCoroutine(DisplayBox(5f, dialogue));
     }
     #endregion
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Money : PickUpObject
 {
-    
+
 
     #region Events
     // Awake is called before Start

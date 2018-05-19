@@ -52,12 +52,10 @@ public class MoneyController : MonoBehaviour
                 Money m = c.GetComponent<Money>();
                 if (m.Value <= amount)
                 {
-                    Vector3 offset = new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f));
+                    Vector3 offset = new Vector3(Random.Range(0f, 1f), Random.Range(0f, 0.5f));
                     GameObject g = Instantiate(c, offset, Quaternion.identity, transform);
                     result.Add(g);
-                    Vector3[] positions = new Vector3[] { g.transform.position + 5f * Vector3.down };
-                    float[] times = new float[] { 1f };
-                    StartCoroutine(Utils.MoveObject(g.transform, positions, times));
+                    StartCoroutine(Utils.MoveObjectBy(g.transform, 4f * Vector3.down, 1f));
                     g.GetComponent<SpriteRenderer>().sortingOrder = i;
                     amount -= m.Value;
                     break;
@@ -65,6 +63,17 @@ public class MoneyController : MonoBehaviour
             }
         }
         return result.ToArray();
+    }
+
+    // Return the value of a collection of money
+    public int TotalValue(Money[] money)
+    {
+        int result = 0;
+        foreach (Money m in money)
+        {
+            result += m.Value;
+        }
+        return result;
     }
     #endregion
 
