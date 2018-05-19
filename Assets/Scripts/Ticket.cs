@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ticket : MonoBehaviour
+public class Ticket : PickUpObject
 {
     #region Variables
 
@@ -33,6 +33,14 @@ public class Ticket : MonoBehaviour
     #endregion
 
     #region Methods
+
+    public override int GetMonetaryValue
+    {
+        get
+        {
+            return this.Value / 2;
+        }
+    }
 
     #endregion
 
