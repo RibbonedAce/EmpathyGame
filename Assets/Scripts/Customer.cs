@@ -33,7 +33,12 @@ public class Customer : MonoBehaviour
     #endregion
 
     #region Methods
-
+    // Ask for tickets
+    public void AskForTickets()
+    {
+        DialogueBox.Instance.GiveDialogue("2 tickets, please.");
+        
+    }
     #endregion
 
     #region Coroutines
