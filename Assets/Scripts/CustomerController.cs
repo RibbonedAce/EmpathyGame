@@ -58,6 +58,18 @@ public class CustomerController : MonoBehaviour
         StartCoroutine(SummonCustomer());
     }
 
+    // Request the customer to give more money
+    public void GiveMoreMoney()
+    {
+        CurrentCustomer.GiveMoreMoney();
+    }
+
+    // Ask the customer to verify the order
+    public void VerifyOrder()
+    {
+        CurrentCustomer.VerifyOrder();
+    }
+
     // Ask the customer if the purchase is fine
     public void EvaluatePurchase()
     {

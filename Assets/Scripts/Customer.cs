@@ -7,6 +7,7 @@ public class Customer : MonoBehaviour
     #region Variables
     private int request;    // How many tickets that are wanted
     private int moneyGiven; // The amount of money given to pay
+    private int[] moneyAmounts = new int[] { 100, 500, 1000, 2000 };
     #endregion
 
     #region Properties
@@ -51,17 +52,47 @@ public class Customer : MonoBehaviour
     #endregion
 
     #region Methods
-    // Initialize customer
-
+    // Round up for sending in a bill
+    private int RoundOrder(int amount)
+    {
+        foreach (int i in moneyAmounts)
+        {
+            if (i >= amount * 50)
+            {
+                return i;
+            }
+        }
+        return 4000;
+    }
 
     // Ask for tickets
     public void AskForTickets()
     {
-        request = Random.Range(2, 10);
+        request = Random.Range(2, 10) * 5;
         DialogueBox.Instance.GiveDialogue(string.Format("{0} tickets, please.", request));
-        int money = request * 50 + Random.Range(-50, 50);
+        int money = RoundOrder(request);
         MoneyController.Instance.GiveMoney(money);
         moneyGiven = money;
+    }
+
+    // Be requested to give more money
+    public void GiveMoreMoney()
+    {
+        if (moneyGiven < request * 50)
+        {
+            MoneyController.Instance.GiveMoney(RoundOrder(request * 50 - moneyGiven));
+        }
+        else
+        {
+            DialogueBox.Instance.GiveDialogue("I already gave you enough money.");
+            GameController.Instance.AddScore(-25);
+        }
+    }
+
+    // Be asked to verify the order
+    public void VerifyOrder()
+    {
+        DialogueBox.Instance.GiveDialogue(string.Format("I asked for {0} tickets.", request));
     }
 
     // Evaulate the purchase
