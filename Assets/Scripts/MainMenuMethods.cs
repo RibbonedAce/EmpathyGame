@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class MainMenuMethods : MonoBehaviour
 {
     #region Variables
@@ -36,8 +36,7 @@ public class MainMenuMethods : MonoBehaviour
     // Start the game
     public void StartGame()
     {
-        Debug.Log("hi");
-        
+        SceneManager.LoadScene("Main");
         //("Assets/Scenes/UI_Pitch");
     }
 
