@@ -9,10 +9,11 @@ public class TicketStorage : MonoBehaviour {
     Vector2 direction;
     [SerializeField]
     float angle;
-    MonetaryStorage storageList;
+    int value = 0;
+
 	// Use this for initialization
 	void Start () {
-        storageList = new MonetaryStorage();
+       
     }
 	
 	// Update is called once per frame
@@ -36,13 +37,12 @@ public class TicketStorage : MonoBehaviour {
     {
         if (ticket != null)
         {
-            storageList.AddValue(ticket.gameObject);
-            Destroy(ticket.gameObject);
+            value += ticket.Value;
         }
     }
     public void GetTicket(int value)
     {
-        int val = storageList.GetValue(value);
+       // int val = storageList.GetValue(value);
     }
     private void OnDrawGizmos()
     {
