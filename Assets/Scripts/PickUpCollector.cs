@@ -50,17 +50,19 @@ public class PickUpCollector : MonoBehaviour
             foreach (RaycastHit2D hit in hitList)
             {
                 pickUp = hit.transform.GetComponent<PickUpObject>();
-                if(pickUp.GetType() == typeof(Money))
+                if (pickUp != null)
                 {
-                    moneyValue += pickUp.Value;
-                    moneyMonetaryValue += pickUp.GetMonetaryValue;
+                    if (pickUp.GetType() == typeof(Money))
+                    {
+                        moneyValue += pickUp.Value;
+                        moneyMonetaryValue += pickUp.GetMonetaryValue;
+                    }
+                    else
+                    {
+                        ticketsValue += pickUp.Value;
+                        ticketsMonetaryValue += pickUp.GetMonetaryValue;
+                    }
                 }
-                else
-                {
-                    ticketsValue += pickUp.Value;
-                    ticketsMonetaryValue += pickUp.GetMonetaryValue;
-                }
-                
             }
         }
         totalMoneyValue = moneyValue;
