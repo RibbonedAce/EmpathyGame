@@ -72,5 +72,24 @@ public static class Utils
             tr.position = newPos;
         }
     }
+
+    // Split up a number into some more randomly
+    public static int[] SplitNumber(int num, int size)
+    {
+        int[] result = new int[size];
+        List<int> splits = new List<int>(size - 1);
+        for (int i = 0; i < size - 1; ++i)
+        {
+            splits.Add(Random.Range(0, num));
+        }
+        splits.Sort();
+        result[0] = splits[0];
+        for (int i = 1; i < size - 1; ++i)
+        {
+            result[i] = splits[i] - splits[i - 1];
+        }
+        result[size - 1] = num - splits[size - 2];
+        return result;
+    }
     #endregion
 }
