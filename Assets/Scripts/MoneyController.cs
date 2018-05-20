@@ -7,6 +7,7 @@ public class MoneyController : MonoBehaviour
     #region Variables
     [SerializeField]
     public GameObject[] currency;                                   // The different money objects
+    private int sortingIndex = 0;                                   // The last kept index
     #endregion
 
     #region Properties
@@ -54,7 +55,7 @@ public class MoneyController : MonoBehaviour
                     Vector3 offset = new Vector3(Random.Range(0f, 1f), Random.Range(0f, 0.5f));
                     GameObject g = Instantiate(c, offset, Quaternion.identity, transform);
                     StartCoroutine(Utils.MoveObjectBy(g.transform, 3f * Vector3.down, 1f));
-                    g.GetComponent<SpriteRenderer>().sortingOrder = i;
+                    g.GetComponent<SpriteRenderer>().sortingOrder = sortingIndex++;
                     amount -= m.Value;
                     break;
                 }
@@ -75,7 +76,7 @@ public class MoneyController : MonoBehaviour
                 if (m.Value <= amount)
                 {
                     GameObject g = Instantiate(c, Vector3.down, Quaternion.identity, transform);
-                    g.GetComponent<SpriteRenderer>().sortingOrder = i;
+                    g.GetComponent<SpriteRenderer>().sortingOrder = sortingIndex++;
                     amount -= m.Value;
                     break;
                 }
