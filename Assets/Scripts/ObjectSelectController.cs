@@ -38,6 +38,7 @@ public class ObjectSelectController : MonoBehaviour {
                     if (hit.transform.GetComponents<PickUpObject>().Length > 0)
                     {
                         SelectedObject = hit.transform.gameObject;
+                        SelectedObject.GetComponent<Collider2D>().enabled = false;
                         distanceFromCamera = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - new Vector3(hit.point.x, hit.point.y, hit.transform.position.z)).magnitude;
 
 
@@ -53,10 +54,12 @@ public class ObjectSelectController : MonoBehaviour {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 Vector3 v = ray.GetPoint(distanceFromCamera) + new Vector3(Offset.x, Offset.y, 0.0f);
                 v.z = 0.0f;
+                SelectedObject.GetComponent<Collider2D>().enabled = false;
                 SelectedObject.transform.position = v;
             }
             else
             {
+                SelectedObject.GetComponent<Collider2D>().enabled = true;
                 SelectedObject = null;
             }
         }
