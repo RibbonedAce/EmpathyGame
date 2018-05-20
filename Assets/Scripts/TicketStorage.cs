@@ -13,7 +13,8 @@ public class TicketStorage : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-       
+        size = new Vector2(transform.lossyScale.x, transform.lossyScale.y);
+        size *= 0.5f;
     }
 	
 	// Update is called once per frame
