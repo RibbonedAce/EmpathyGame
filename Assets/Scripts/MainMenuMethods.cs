@@ -36,7 +36,8 @@ public class MainMenuMethods : MonoBehaviour
     // Start the game
     public void StartGame()
     {
-
+        Debug.Log("hi");
+        AssetBundle.LoadFromFile("Assets/Scenes/UI_Pitch");
     }
 
     // Quit the game
