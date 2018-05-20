@@ -27,6 +27,7 @@ public class TicketStorage : MonoBehaviour {
 
         if (hitList.Length > 0)
         {
+            
             foreach (RaycastHit2D hit in hitList)
             {
                 AddTicketValue(hit.transform.gameObject.GetComponent<Ticket>());
@@ -38,6 +39,7 @@ public class TicketStorage : MonoBehaviour {
         if (ticket != null)
         {
             value += ticket.Value;
+            Destroy(ticket.gameObject);
         }
     }
     public void GetTicket(int value)

@@ -40,6 +40,7 @@ public class MoneyStorage : MonoBehaviour {
         if (ticket != null)
         {
             value += ticket.Value;
+            Destroy(ticket.gameObject);
         }
     }
     public void GetTicket(int value)
