@@ -73,18 +73,21 @@ public class Customer : MonoBehaviour
             GameController.Instance.AddScore(-2 * Mathf.Abs(PurchaseDiff));
             PickUpCollector.Instance.DestroyCollection();
             MoveOn();
+            AudioController.Instance.PlayClip(3);
             CustomerController.Instance.SummonNextCustomer();
         }
         else
         {
             DialogueBox.Instance.GiveDialogue("That's not what I wanted.");
             GameController.Instance.AddScore(-50);
+            AudioController.Instance.PlayClip(4);
         }
     }
 
     // Move on for the next customer
     private void MoveOn()
     {
+        
         StartCoroutine(Utils.MoveObjectBy(transform, 15f * Vector3.right, 2f));
         Destroy(gameObject, 2f);
     }

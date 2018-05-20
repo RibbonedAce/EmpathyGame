@@ -60,6 +60,7 @@ public class MoneyController : MonoBehaviour
                 }
             }
         }
+        AudioController.Instance.PlayClip(1);
     }
 
     // Spawn money in the world
@@ -80,6 +81,7 @@ public class MoneyController : MonoBehaviour
                 }
             }
         }
+        AudioController.Instance.PlayClip(2);
     }
 
     // Return the value of a collection of money

@@ -23,6 +23,7 @@ public class PickUpSpawner : MonoBehaviour {
     {
         GameObject g = Instantiate(ticketObject);
         g.GetComponent<PickUpObject>().Value = value;
+        AudioController.Instance.PlayClip(2);
     }
 
     public void ChangeValue(string str)

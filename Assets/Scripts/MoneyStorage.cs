@@ -40,6 +40,7 @@ public class MoneyStorage : MonoBehaviour {
         if (ticket != null)
         {
             GameController.Instance.AddScore(ticket.Value);
+            AudioController.Instance.PlayClip(0);
             Destroy(ticket.gameObject);
         }
     }
