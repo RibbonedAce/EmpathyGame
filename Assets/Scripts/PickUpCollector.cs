@@ -52,6 +52,8 @@ public class PickUpCollector : MonoBehaviour
         totalTicketValue = ticketsValue;
         totalMoneyMonetaryValue = moneyMonetaryValue;
         totalTicketMonetaryValue = ticketsMonetaryValue;
+        Debug.Log(totalTicketValue);
+        Debug.Log(totalTicketMonetaryValue);
     }
     public int TotalMoneyMonetaryValue
     {
@@ -71,14 +73,14 @@ public class PickUpCollector : MonoBehaviour
     {
         get
         {
-            return totalMoneyMonetaryValue;
+            return totalMoneyValue;
         }
     }
     public int TotalTicketValue
     {
         get
         {
-            return totalTicketMonetaryValue;
+            return totalTicketValue;
         }
     }
     public void DestroyCollection()
