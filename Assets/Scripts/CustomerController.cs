@@ -6,7 +6,7 @@ public class CustomerController : MonoBehaviour
 {
     #region Variables
     [SerializeField]
-    private GameObject customerPrefab;                              // The customer prefab to spawn
+    private GameObject[] customerPrefabs;                           // The customer prefab to spawn
     #endregion
 
     #region Properties
@@ -74,7 +74,7 @@ public class CustomerController : MonoBehaviour
     // Go to the next customer
     private IEnumerator SummonCustomer()
     {
-        CurrentCustomer = Instantiate(customerPrefab, 15 * Vector3.left, Quaternion.identity, transform).GetComponent<Customer>();
+        CurrentCustomer = Instantiate(customerPrefabs[Random.Range(0, customerPrefabs.Length)], 15 * Vector3.left, Quaternion.identity, transform).GetComponent<Customer>();
         yield return StartCoroutine(Utils.MoveObject(CurrentCustomer.transform, Vector3.zero, 2f));
         CurrentCustomer.AskForTickets();
     }

@@ -2,31 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Customer : MonoBehaviour
+public class GrumpyCustomer : Customer
 {
     #region Variables
-    protected int request;      // How many tickets that are wanted
-    protected int moneyGiven;   // The amount of money given to pay
-    protected int[] moneyAmounts = new int[] { 100, 500, 1000, 2000 };
+    private bool confronted = false;    // Whether you asked for more money
     #endregion
 
     #region Properties
-
     // Whether what is being given is acceptable
-    protected virtual bool PurchaseGood
+    protected override bool PurchaseGood
     {
         get
         {
-            return PickUpCollector.Instance.TotalTicketValue == request && PickUpCollector.Instance.TotalTicketMoneyValue + PickUpCollector.Instance.TotalMoneyValue == moneyGiven;
-        }
-    }
-
-    // The difference in valid exchange
-    protected int PurchaseDiff
-    {
-        get
-        {
-            return PickUpCollector.Instance.TotalTicketMoneyValue + PickUpCollector.Instance.TotalMoneyValue - moneyGiven;
+            if (!confronted)
+            {
+                return PickUpCollector.Instance.TotalTicketValue >= request;
+            }
+            else
+            {
+                return PickUpCollector.Instance.TotalMoneyValue >= moneyGiven;
+            }
         }
     }
     #endregion
@@ -35,7 +30,7 @@ public class Customer : MonoBehaviour
     // Awake is called before Start
     private void Awake()
     {
-        
+
     }
 
     // Use this for initialization
@@ -52,35 +47,23 @@ public class Customer : MonoBehaviour
     #endregion
 
     #region Methods
-    // Round up for sending in a bill
-    protected int RoundOrder(int amount)
-    {
-        foreach (int i in moneyAmounts)
-        {
-            if (i >= amount * 50)
-            {
-                return i;
-            }
-        }
-        return 4000;
-    }
-
     // Ask for tickets
-    public virtual void AskForTickets()
+    public override void AskForTickets()
     {
         request = Random.Range(2, 10) * 5;
         DialogueBox.Instance.GiveDialogue(string.Format("{0} tickets, please.", request));
-        int money = RoundOrder(request);
+        int money = RoundOrder(request / 2);
         MoneyController.Instance.GiveMoney(money);
         moneyGiven = money;
     }
 
     // Be requested to give more money
-    public virtual void GiveMoreMoney()
+    public override void GiveMoreMoney()
     {
         if (moneyGiven < request * 50)
         {
-            MoneyController.Instance.GiveMoney(RoundOrder(request * 50 - moneyGiven));
+            confronted = true;
+            DialogueBox.Instance.GiveDialogue("No. I need those tickets and I won't pay any more for them.");
         }
         else
         {
@@ -90,17 +73,17 @@ public class Customer : MonoBehaviour
     }
 
     // Be asked to verify the order
-    public virtual void VerifyOrder()
+    public override void VerifyOrder()
     {
         DialogueBox.Instance.GiveDialogue(string.Format("I asked for {0} tickets.", request));
     }
 
     // Evaulate the purchase
-    public virtual void EvaluatePurchase()
+    public override void EvaluatePurchase()
     {
         if (PurchaseGood)
         {
-            DialogueBox.Instance.GiveDialogue("Thanks!");
+            DialogueBox.Instance.GiveDialogue("Fine. I didn't need to get in anyway.");
             GameController.Instance.AddScore(-2 * Mathf.Abs(PurchaseDiff));
             PickUpCollector.Instance.DestroyCollection();
             MoveOn();
@@ -116,9 +99,9 @@ public class Customer : MonoBehaviour
     }
 
     // Move on for the next customer
-    protected virtual void MoveOn()
+    protected override void MoveOn()
     {
-        StartCoroutine(Utils.MoveObjectBy(transform, 15f * Vector3.right, 2f));
+        StartCoroutine(Utils.MoveObjectBy(transform, -15f * Vector3.right, 2f));
         Destroy(gameObject, 2f);
     }
     #endregion
