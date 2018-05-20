@@ -95,7 +95,7 @@ public class PickUpCollector : MonoBehaviour
     {
         get
         {
-            return totalTicketMonetaryValue;
+            return totalTicketValue;
         }
     }
     public void DestroyCollection()

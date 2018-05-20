@@ -25,7 +25,7 @@ public class Customer : MonoBehaviour
     {
         get
         {
-            return PickUpCollector.Instance.TotalTicketMoneyValue + PickUpCollector.Instance.TotalMoneyValue - request * 50;
+            return PickUpCollector.Instance.TotalTicketMoneyValue + PickUpCollector.Instance.TotalMoneyValue - (moneyGiven - request * 50);
         }
     }
     #endregion
@@ -57,8 +57,9 @@ public class Customer : MonoBehaviour
     // Ask for tickets
     public void AskForTickets()
     {
-        DialogueBox.Instance.GiveDialogue("3 tickets, please.");
-        int money = 999;
+        request = Random.Range(2, 10);
+        DialogueBox.Instance.GiveDialogue(string.Format("{0} tickets, please.", request));
+        int money = request * 50 + Random.Range(-50, 50);
         MoneyController.Instance.GiveMoney(money);
         moneyGiven = money;
     }
@@ -66,6 +67,7 @@ public class Customer : MonoBehaviour
     // Evaulate the purchase
     public void EvaluatePurchase()
     {
+        Debug.Log(PurchaseDiff);
         if (PurchaseGood)
         {
             DialogueBox.Instance.GiveDialogue("Thanks!");

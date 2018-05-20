@@ -6,10 +6,11 @@ public class PickUpSpawner : MonoBehaviour {
 
     [SerializeField]
     GameObject ticketObject;
+    public int value;
     // Use this for initialization
     void Start()
     {
-        SpawnObject(10);
+
     }
 
     // Update is called once per frame
@@ -17,9 +18,15 @@ public class PickUpSpawner : MonoBehaviour {
     {
 
     }
-    public void SpawnObject(int value)
+
+    public void SpawnObject()
     {
         GameObject g = Instantiate(ticketObject);
         g.GetComponent<PickUpObject>().Value = value;
+    }
+
+    public void ChangeValue(string str)
+    {
+        value = int.Parse(str);
     }
 }
