@@ -16,7 +16,7 @@ public class Customer : MonoBehaviour
     {
         get
         {
-            return PickUpCollector.Instance.TotalTicketValue == request && PickUpCollector.Instance.TotalTicketMoneyValue + PickUpCollector.Instance.TotalMoneyValue == moneyGiven;
+            return PickUpCollector.Instance.TotalTicketValue == request;
         }
     }
 
@@ -25,7 +25,7 @@ public class Customer : MonoBehaviour
     {
         get
         {
-            return PickUpCollector.Instance.TotalTicketMoneyValue + PickUpCollector.Instance.TotalMoneyValue - (moneyGiven - request * 50);
+            return PickUpCollector.Instance.TotalTicketMoneyValue + PickUpCollector.Instance.TotalMoneyValue - moneyGiven;
         }
     }
     #endregion
@@ -67,11 +67,10 @@ public class Customer : MonoBehaviour
     // Evaulate the purchase
     public void EvaluatePurchase()
     {
-        Debug.Log(PurchaseDiff);
         if (PurchaseGood)
         {
             DialogueBox.Instance.GiveDialogue("Thanks!");
-            GameController.Instance.AddScore(100 - Mathf.Abs(PurchaseDiff));
+            GameController.Instance.AddScore(-2 * Mathf.Abs(PurchaseDiff));
             PickUpCollector.Instance.DestroyCollection();
             MoveOn();
             CustomerController.Instance.SummonNextCustomer();

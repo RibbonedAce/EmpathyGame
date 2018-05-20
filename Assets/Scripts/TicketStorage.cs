@@ -38,7 +38,7 @@ public class TicketStorage : MonoBehaviour {
     {
         if (ticket != null)
         {
-            value += ticket.Value;
+            GameController.Instance.AddScore(ticket.GetMonetaryValue);
             Destroy(ticket.gameObject);
         }
     }

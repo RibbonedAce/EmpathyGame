@@ -65,6 +65,7 @@ public class MoneyController : MonoBehaviour
     // Spawn money in the world
     public void SpawnMoney(int amount)
     {
+        GameController.Instance.AddScore(-amount);
         for (int i = 0; i < 100 && amount > 0; ++i)
         {
             foreach (GameObject c in currency)

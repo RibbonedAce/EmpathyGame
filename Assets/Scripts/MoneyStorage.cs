@@ -39,7 +39,7 @@ public class MoneyStorage : MonoBehaviour {
     {
         if (ticket != null)
         {
-            value += ticket.Value;
+            GameController.Instance.AddScore(ticket.Value);
             Destroy(ticket.gameObject);
         }
     }
