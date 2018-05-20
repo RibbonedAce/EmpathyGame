@@ -118,7 +118,6 @@ public class Customer : MonoBehaviour
     // Move on for the next customer
     private void MoveOn()
     {
-        
         StartCoroutine(Utils.MoveObjectBy(transform, 15f * Vector3.right, 2f));
         Destroy(gameObject, 2f);
     }

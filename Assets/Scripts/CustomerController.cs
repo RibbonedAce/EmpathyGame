@@ -6,21 +6,14 @@ public class CustomerController : MonoBehaviour
 {
     #region Variables
     [SerializeField]
-    private Customer[] customers;                                   // All of the customers in line 
-    private int customerIndex = -1;                                 // The customer currently being served
+    private GameObject customerPrefab;                              // The customer prefab to spawn
     #endregion
 
     #region Properties
     public static CustomerController Instance { get; private set; } // The instance to reference
     
     // Returns the current customer
-    public Customer CurrentCustomer
-    {
-        get
-        {
-            return customerIndex < customers.Length ? customers[customerIndex] : null;
-        }
-    }
+    public Customer CurrentCustomer { get; private set; }           // The current customer
     #endregion
 
     #region Events
@@ -81,11 +74,9 @@ public class CustomerController : MonoBehaviour
     // Go to the next customer
     private IEnumerator SummonCustomer()
     {
-        if (++customerIndex < customers.Length)
-        {
-            yield return StartCoroutine(Utils.MoveObject(CurrentCustomer.transform, Vector3.zero, 2f));
-            CurrentCustomer.AskForTickets();
-        }
+        CurrentCustomer = Instantiate(customerPrefab, 15 * Vector3.left, Quaternion.identity, transform).GetComponent<Customer>();
+        yield return StartCoroutine(Utils.MoveObject(CurrentCustomer.transform, Vector3.zero, 2f));
+        CurrentCustomer.AskForTickets();
     }
     #endregion
 }
