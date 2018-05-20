@@ -40,6 +40,11 @@ public class MainMenuMethods : MonoBehaviour
         //("Assets/Scenes/UI_Pitch");
     }
 
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
     // Quit the game
     public void QuitGame()
     {
