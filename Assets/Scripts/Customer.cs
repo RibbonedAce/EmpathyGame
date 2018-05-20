@@ -16,7 +16,16 @@ public class Customer : MonoBehaviour
     {
         get
         {
-            return true;
+            return PickUpCollector.Instance.TotalTicketValue == request && PickUpCollector.Instance.TotalTicketMoneyValue + PickUpCollector.Instance.TotalMoneyValue == moneyGiven;
+        }
+    }
+
+    // The difference in valid exchange
+    private int PurchaseDiff
+    {
+        get
+        {
+            return PickUpCollector.Instance.TotalTicketMoneyValue + PickUpCollector.Instance.TotalMoneyValue - request * 50;
         }
     }
     #endregion
@@ -42,11 +51,16 @@ public class Customer : MonoBehaviour
     #endregion
 
     #region Methods
+    // Initialize customer
+
+
     // Ask for tickets
     public void AskForTickets()
     {
         DialogueBox.Instance.GiveDialogue("3 tickets, please.");
-        GameObject[] money = MoneyController.Instance.SpawnMoney(999);
+        int money = 999;
+        MoneyController.Instance.GiveMoney(money);
+        moneyGiven = money;
     }
 
     // Evaulate the purchase
@@ -55,12 +69,15 @@ public class Customer : MonoBehaviour
         if (PurchaseGood)
         {
             DialogueBox.Instance.GiveDialogue("Thanks!");
+            GameController.Instance.AddScore(100 - Mathf.Abs(PurchaseDiff));
+            PickUpCollector.Instance.DestroyCollection();
             MoveOn();
             CustomerController.Instance.SummonNextCustomer();
         }
         else
         {
             DialogueBox.Instance.GiveDialogue("That's not what I wanted.");
+            GameController.Instance.AddScore(-50);
         }
     }
 

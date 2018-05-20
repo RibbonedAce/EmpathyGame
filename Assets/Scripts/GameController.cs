@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour
         {
             Destroy(this);
         }
+        Score = 0;
     }
 
     // Use this for initialization
@@ -36,15 +37,19 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-
+        
     }
     #endregion
 
     #region Methods
-
+    // Add score to the game
+    public void AddScore(int value)
+    {
+        Score += value;
+    }
     #endregion
 
     #region Coroutines
-
+    
     #endregion
 }

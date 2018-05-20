@@ -42,9 +42,8 @@ public class MoneyController : MonoBehaviour
 
     #region Methods
     // Give an amount of money
-    public GameObject[] SpawnMoney(int amount)
+    public void GiveMoney(int amount)
     {
-        List<GameObject> result = new List<GameObject>();
         for (int i = 0; i < 100 && amount > 0; ++i)
         {
             foreach (GameObject c in currency)
@@ -54,15 +53,32 @@ public class MoneyController : MonoBehaviour
                 {
                     Vector3 offset = new Vector3(Random.Range(0f, 1f), Random.Range(0f, 0.5f));
                     GameObject g = Instantiate(c, offset, Quaternion.identity, transform);
-                    result.Add(g);
-                    StartCoroutine(Utils.MoveObjectBy(g.transform, 4f * Vector3.down, 1f));
+                    StartCoroutine(Utils.MoveObjectBy(g.transform, 3f * Vector3.down, 1f));
                     g.GetComponent<SpriteRenderer>().sortingOrder = i;
                     amount -= m.Value;
                     break;
                 }
             }
         }
-        return result.ToArray();
+    }
+
+    // Spawn money in the world
+    public void SpawnMoney(int amount)
+    {
+        for (int i = 0; i < 100 && amount > 0; ++i)
+        {
+            foreach (GameObject c in currency)
+            {
+                Money m = c.GetComponent<Money>();
+                if (m.Value <= amount)
+                {
+                    GameObject g = Instantiate(c, Vector3.down, Quaternion.identity, transform);
+                    g.GetComponent<SpriteRenderer>().sortingOrder = i;
+                    amount -= m.Value;
+                    break;
+                }
+            }
+        }
     }
 
     // Return the value of a collection of money

@@ -40,14 +40,6 @@ public class Ticket : PickUpObject
 
     #region Methods
 
-    public override int GetMonetaryValue
-    {
-        get
-        {
-            return this.Value / 2;
-        }
-    }
-
     #endregion
 
     #region Coroutines
