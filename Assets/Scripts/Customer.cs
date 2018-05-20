@@ -16,7 +16,16 @@ public class Customer : MonoBehaviour
     {
         get
         {
-            return true;
+            return PickUpCollector.Instance.TotalTicketValue == request;
+        }
+    }
+
+    // The difference in valid exchange
+    private int PurchaseDiff
+    {
+        get
+        {
+            return PickUpCollector.Instance.TotalTicketMoneyValue + PickUpCollector.Instance.TotalMoneyValue - moneyGiven;
         }
     }
     #endregion
@@ -42,11 +51,17 @@ public class Customer : MonoBehaviour
     #endregion
 
     #region Methods
+    // Initialize customer
+
+
     // Ask for tickets
     public void AskForTickets()
     {
-        DialogueBox.Instance.GiveDialogue("3 tickets, please.");
-        GameObject[] money = MoneyController.Instance.SpawnMoney(999);
+        request = Random.Range(2, 10);
+        DialogueBox.Instance.GiveDialogue(string.Format("{0} tickets, please.", request));
+        int money = request * 50 + Random.Range(-50, 50);
+        MoneyController.Instance.GiveMoney(money);
+        moneyGiven = money;
     }
 
     // Evaulate the purchase
@@ -55,18 +70,24 @@ public class Customer : MonoBehaviour
         if (PurchaseGood)
         {
             DialogueBox.Instance.GiveDialogue("Thanks!");
+            GameController.Instance.AddScore(-2 * Mathf.Abs(PurchaseDiff));
+            PickUpCollector.Instance.DestroyCollection();
             MoveOn();
+            AudioController.Instance.PlayClip(3);
             CustomerController.Instance.SummonNextCustomer();
         }
         else
         {
             DialogueBox.Instance.GiveDialogue("That's not what I wanted.");
+            GameController.Instance.AddScore(-50);
+            AudioController.Instance.PlayClip(4);
         }
     }
 
     // Move on for the next customer
     private void MoveOn()
     {
+        
         StartCoroutine(Utils.MoveObjectBy(transform, 15f * Vector3.right, 2f));
         Destroy(gameObject, 2f);
     }

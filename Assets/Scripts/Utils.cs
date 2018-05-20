@@ -21,6 +21,10 @@ public static class Utils
         {
             tr.position = Vector3.Lerp(oldPos, position, t / time);
             yield return null;
+            if (tr == null)
+            {
+                yield break;
+            }
         }
         tr.position = position;
     }

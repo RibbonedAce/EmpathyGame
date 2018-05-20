@@ -4,10 +4,11 @@ using UnityEngine;
 
 public abstract class PickUpObject : MonoBehaviour {
     [SerializeField]
-    int _value;
-    bool IsSelected;
-    bool isInitialized = false;
-    public int Value
+    protected int _value;
+    protected bool IsSelected;
+    protected bool isInitialized = false;
+    private SpriteRenderer _spriteRenderer;
+    public virtual int Value
     {
         get
         {
@@ -36,5 +37,10 @@ public abstract class PickUpObject : MonoBehaviour {
         {
             IsSelected = value;
         }
+    }
+
+    private void Awake()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 }

@@ -16,6 +16,23 @@ public class Ticket : PickUpObject
             return Value * 50;
         }
     }
+
+    public override int Value
+    {
+        get
+        {
+            return _value;
+        }
+        set
+        {
+            if (!isInitialized)
+            {
+                isInitialized = true;
+                _value = value;
+                GetComponentInChildren<TextMesh>().text = _value.ToString();
+            }
+        }
+    }
     #endregion
 
     #region Events
@@ -39,8 +56,6 @@ public class Ticket : PickUpObject
     #endregion
 
     #region Methods
-
-    
 
     #endregion
 

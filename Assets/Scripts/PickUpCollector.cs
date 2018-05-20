@@ -15,6 +15,21 @@ public class PickUpCollector : MonoBehaviour
     int totalTicketValue;
     int totalMoneyValue;
     RaycastHit2D[] hitList;
+
+    public static PickUpCollector Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -35,17 +50,19 @@ public class PickUpCollector : MonoBehaviour
             foreach (RaycastHit2D hit in hitList)
             {
                 pickUp = hit.transform.GetComponent<PickUpObject>();
-                if(pickUp.GetType() == typeof(Money))
+                if (pickUp != null)
                 {
-                    moneyValue += pickUp.Value;
-                    moneyMonetaryValue += pickUp.GetMonetaryValue;
+                    if (pickUp.GetType() == typeof(Money))
+                    {
+                        moneyValue += pickUp.Value;
+                        moneyMonetaryValue += pickUp.GetMonetaryValue;
+                    }
+                    else
+                    {
+                        ticketsValue += pickUp.Value;
+                        ticketsMonetaryValue += pickUp.GetMonetaryValue;
+                    }
                 }
-                else
-                {
-                    ticketsValue += pickUp.Value;
-                    ticketsMonetaryValue += pickUp.GetMonetaryValue;
-                }
-                
             }
         }
         totalMoneyValue = moneyValue;
@@ -87,7 +104,8 @@ public class PickUpCollector : MonoBehaviour
     {
         foreach (RaycastHit2D hit in hitList)
         {
-            Destroy(hit.transform.gameObject);
+            StartCoroutine(Utils.MoveObject(hit.transform, Vector3.zero, 0.5f));
+            Destroy(hit.transform.gameObject, 0.5f);
         }
         hitList = null;
     }

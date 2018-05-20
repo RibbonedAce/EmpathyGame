@@ -21,14 +21,28 @@ public class ObjectSelectController : MonoBehaviour {
         {
             if (Input.GetMouseButtonDown(0))
             {
-                RaycastHit2D hitList = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), RayCastDir);
-                if (hitList && hitList.transform.GetComponents<PickUpObject>().Length > 0)
+                RaycastHit2D[] hitList = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), RayCastDir);
+                if (hitList.Length > 0)
                 {
-                    SelectedObject = hitList.transform.gameObject;
-                    distanceFromCamera = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - new Vector3(hitList.point.x, hitList.point.y, hitList.transform.position.z)).magnitude;
-                    
-                    
-                    Offset = new Vector2(hitList.transform.position.x, hitList.transform.position.y)- hitList.point;
+                    RaycastHit2D hit = hitList[0];
+                    int maxLayer = int.MinValue;
+                    foreach (RaycastHit2D r in hitList)
+                    {
+                        SpriteRenderer s = r.transform.GetComponent<SpriteRenderer>();
+                        if (s.sortingOrder > maxLayer)
+                        {
+                            hit = r;
+                            maxLayer = s.sortingOrder;
+                        }
+                    }
+                    if (hit.transform.GetComponents<PickUpObject>().Length > 0)
+                    {
+                        SelectedObject = hit.transform.gameObject;
+                        distanceFromCamera = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - new Vector3(hit.point.x, hit.point.y, hit.transform.position.z)).magnitude;
+
+
+                        Offset = new Vector2(hit.transform.position.x, hit.transform.position.y) - hit.point;
+                    }
                 }
             }
         }

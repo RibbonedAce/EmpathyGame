@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class AudioController : MonoBehaviour
 {
     #region Variables
-
+    [SerializeField]
+    private AudioSource source;                                     // Where to play the audio from
+    [SerializeField]
+    private AudioClip[] clips;                                      // The audio clips to play in game
     #endregion
 
     #region Properties
-    public static GameController Instance { get; private set; } // The instance to reference
-    public int Score { get; private set; }                      // The score of the game
+    public static AudioController Instance { get; private set; }    // The instance to reference
     #endregion
 
     #region Events
@@ -25,7 +27,6 @@ public class GameController : MonoBehaviour
         {
             Destroy(this);
         }
-        Score = 0;
     }
 
     // Use this for initialization
@@ -37,19 +38,23 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        
+
     }
     #endregion
 
     #region Methods
-    // Add score to the game
-    public void AddScore(int value)
+    // Play a given clip
+    public void PlayClip(int index)
     {
-        Score += value;
+        if (index < clips.Length)
+        {
+            source.clip = clips[index];
+            source.Play();
+        }
     }
     #endregion
 
     #region Coroutines
-    
+
     #endregion
 }
